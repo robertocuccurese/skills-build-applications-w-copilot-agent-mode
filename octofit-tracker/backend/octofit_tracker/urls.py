@@ -18,7 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from . import views
-
+import os
+from django.http import JsonResponse
 
 router = DefaultRouter()
 router.register(r'users', views.UserViewSet, basename='user')
@@ -27,8 +28,18 @@ router.register(r'activities', views.ActivityViewSet, basename='activity')
 router.register(r'workouts', views.WorkoutViewSet, basename='workout')
 router.register(r'leaderboard', views.LeaderboardViewSet, basename='leaderboard')
 
+# Endpoint informativo che mostra la root API con la variabile $CODESPACE_NAME
+def api_info(request):
+    codespace_name = os.environ.get('CODESPACE_NAME', 'CODESPACE_NAME')
+    base_url = f"https://{codespace_name}-8000.app.github.dev/api/"
+    return JsonResponse({
+        "message": "Benvenuto nell'API Octofit Tracker!",
+        "api_base_url": base_url,
+        "esempio_endpoint": f"{base_url}activities/"
+    })
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.api_root, name='api-root'),
-    path('', include(router.urls)),
+    path('api/', api_info, name='api-info'),
+    path('api/', include(router.urls)),
 ]
