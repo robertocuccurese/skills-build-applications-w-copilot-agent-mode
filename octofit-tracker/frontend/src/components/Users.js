@@ -6,6 +6,7 @@ const Users = () => {
   let endpoint = process.env.REACT_APP_CODESPACE_URL;
   if (!endpoint) {
     const host = window.location.host;
+    // Prende solo la parte codespace-8000.app.github.dev/api/users/
     endpoint = `${window.location.protocol}//${host.replace('-3000', '-8000')}`;
   }
   endpoint += '/api/users/';

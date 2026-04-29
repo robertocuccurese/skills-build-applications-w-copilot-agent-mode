@@ -7,7 +7,7 @@ const Activities = () => {
   if (!endpoint) {
     // Ricava dinamicamente il nome del codespace dalla location
     const host = window.location.host;
-    // Prende solo la parte codespace-8000.app.github.dev
+    // Prende solo la parte codespace-8000.app.github.dev/api/activities/
     endpoint = `${window.location.protocol}//${host.replace('-3000', '-8000')}`;
   }
   endpoint += '/api/activities/';
